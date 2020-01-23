@@ -1,0 +1,51 @@
+<div *ngIf="modalService.modal" class="abrir-modal animacion fadeIn">
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{titulo}}</h5>
+                    <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <ul *ngIf="user" class="list-group text-dark mb-3">
+                                    
+                                    <li class="list-group-item">{{user.name}}</li>
+                                    <li class="list-group-item">{{user.lastname}}</li>
+                                    <li class="list-group-item">{{user.email}}</li>
+                                    <li class="list-group-item">{{user.createdAt | date:"fullDate"}}</li>
+
+                                </ul>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input (change)="seleccionarImagen($event)" type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                                        <label class="custom-file-label" for="inputGroupFile04">Cargar Imágen</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button (click)="subirImagen()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Cargar</button>
+                                    </div>
+                                </div>
+
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{width:progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                                        {{progreso}}%
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm">
+                                <img *ngIf="user?.foto" src="http://localhost:8080/api/uploads/img/{{user.foto}}" class="img-thumbnail rounded" alt="{{user.foto}}"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

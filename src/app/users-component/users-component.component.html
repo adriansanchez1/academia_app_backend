@@ -1,0 +1,52 @@
+<app-detalle *ngIf="userSelected" [user]="userSelected"></app-detalle>
+
+<div class="card border-secondary mb-3">
+    <div class="card-header">Softtekians</div>
+    <div class="card-body text-secondary">
+        <h5 class="card-title">Lista de Usuarios</h5>
+
+        <div class="my-2 text-left">
+            <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/users/form']">Create User</button>
+        </div>
+
+        <div *ngIf="users?.length == 0" class="alert alert-info">
+            <p>No records found</p>
+        </div>
+
+        <table class="table table-bordered table-striped" *ngIf="users?.length > 0">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of users">
+                    <td>
+                        <!--<button type="button" (click)="abrirModal(item)" class="btn btn-success btn-sm">{{item.id}}</button>-->
+                        <img *ngIf="item?.foto" (click)="abrirModal(item)" src="http://localhost:8080/api/uploads/img/{{item.foto}}" class="img-thumbnail rounded" style="width: 64px; cursor: pointer; " alt="{{item.foto}}">
+                        <img *ngIf="!item?.foto" (click)="abrirModal(item)" src="http://localhost:8080/images/noimage.png" class="img-thumbnail rounded" style="width: 64px; cursor: pointer; " alt="{{item.foto}}">
+
+                    </td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.lastname | uppercase}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.createdAt | date:"EEEE dd, MMMM yyy"}}</td>
+                    <!-- edicion -->
+                    <td>
+                        <button type="button" name="edit" [routerLink]="['/users/form', item.id]" class="btn btn-primary">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" name="delete" (click)='delete(item)' class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div style="margin-left: 26px;" *ngIf="isLoaded">
+        <app-paginator-users [paginador]="paginador"></app-paginator-users>
+    </div>
